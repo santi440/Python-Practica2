@@ -15,10 +15,15 @@ def influence(stats):
     """Recibe un diccionario con jugadores cargados y devuelve el jugador o jugadora más influyente de la temporada."""
     return max(stats, key=lambda x: stats[x]['Goles a favor']*1.5 + stats[x]['Goles evitados']*1.25 + stats[x]['Asistencias'])
 
+def influence2(stats):
+    result = map(lambda x:(x,stats[x]['Goles a favor']*1.5 + stats[x]['Goles evitados']*1.25 + stats[x]['Asistencias']),stats)
+    result = tuple(result)
+    most_influential = max(result,key= lambda x: x[1])
+    return most_influential[0]
 
-def team_average(goals):
+def team_average(stats):
     """Calcula el promedio de goles por partido del equipo en general sobre un iterable"""
-    total_goals = sum(goals)
+    total_goals = sum(stats[x]['Goles a favor']for x in stats)
     return total_goals / 25
 
 def goald_leader_average(stats):
